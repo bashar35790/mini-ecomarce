@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import ProductCard from "@/components/ProductCard";
 import data from "@/public/data/data.json";
-import { FaTimes } from "react-icons/fa";
 
 const Products = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);

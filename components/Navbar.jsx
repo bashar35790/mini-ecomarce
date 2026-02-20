@@ -41,7 +41,7 @@ export const Navbar = () => {
       {/* center section  */}
       <ul className="hidden md:flex gap-8 text-gray-700 font-medium">
         <li>
-          <Link href="/" className="hover:text-[#a01f64] transition-colors">
+          <Link href="/home" className="hover:text-[#a01f64] transition-colors">
             Home
           </Link>
         </li>

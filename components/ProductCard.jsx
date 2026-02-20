@@ -123,41 +123,44 @@ const ProductCard = ({ id, image, text, price, category, inStock }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-visible flex flex-col h-[280px]">
-      <div className=" relative w-full h-[200px]">
-        <Image
-          src={image}
-          alt="dk"
-          fill
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-      <div className=" p-4 text-center">
-        <h3 className="text-lg font-semibold text-gray-800 px-4 py-3 pt-0 pb-4 m-0">
-          {text}
-        </h3>
-        <div className="flex items-center justify-between px-4 pt-0 pb-4 mt-0">
-          <span className="text-xl font-bold text-gray-700">
-            ${numericPrice.toFixed(2)}
-          </span>
-          <div className="flex space-x-3">
-            <FaHeart
-              className={`cursor-pointer ${
-                isInWatchlist
-                  ? "text-red-500"
-                  : "text-gray-600 hover:text-red-500"
-              }`}
-              onClick={handleToggleHeart}
-            />
-            <FaShoppingCart
-              className={`cursor-pointer ${
-                isInCart
-                  ? "text-green-500"
-                  : "text-gray-600 hover:text-green-600"
-              }`}
-              onClick={handleToggleCart}
-            />
+    <div className="py-5">
+      <div className="bg-white rounded-lg shadow-md overflow-visible flex flex-col h-70">
+        <div className=" relative w-full h-50">
+          <Image
+            src={image}
+            alt="dk"
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className=" rounded-t-lg"
+          />
+        </div>
+        <div className=" p-4 text-center">
+          <h3 className="text-lg font-semibold text-gray-800 px-4 py-3 pt-0 pb-4 m-0">
+            {text}
+          </h3>
+          <div className="flex items-center justify-between px-4 pt-0 pb-4 mt-0">
+            <span className="text-xl font-bold text-gray-700">
+              ${numericPrice.toFixed(2)}
+            </span>
+            <div className="flex space-x-3">
+              <FaHeart
+                className={`cursor-pointer ${
+                  isInWatchlist
+                    ? "text-red-500"
+                    : "text-gray-600 hover:text-red-500"
+                }`}
+                onClick={handleToggleHeart}
+              />
+              <FaShoppingCart
+                className={`cursor-pointer ${
+                  isInCart
+                    ? "text-green-500"
+                    : "text-gray-600 hover:text-green-600"
+                }`}
+                onClick={handleToggleCart}
+              />
+            </div>
           </div>
         </div>
       </div>

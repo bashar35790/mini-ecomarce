@@ -4,7 +4,7 @@ import { SiderComponent } from "@/components/SiderComponent";
 import TopSellers from "@/components/TopSellers";
 import React from "react";
 
-export const HomePage = () => {
+export default function HomePage() {
   return (
     <main>
       <SiderComponent />
@@ -13,4 +13,4 @@ export const HomePage = () => {
       <TopSellers />
     </main>
   );
-};
+}

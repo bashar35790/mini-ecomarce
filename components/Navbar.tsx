@@ -8,7 +8,7 @@ import {
   FaTimes,
   FaTruck,
 } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../lib/hooks";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,29 +16,29 @@ export const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  //get cart items from redux store to display the item count
-  const cartItems = useSelector((state) => state.cart.items);
+  // get cart items from redux store to display the item count
+  const cartItems = useAppSelector((state) => state.cart.items);
   const cartItemCount = cartItems.reduce(
     (total, item) => total + item.quantity,
     0,
   );
 
   // get watchlist items from redux to display item count
-  const watchlistItem = useSelector((state) => state.watchlist.items);
+  const watchlistItem = useAppSelector((state) => state.watchlist.items);
   const watchlistItemCount = watchlistItem.length;
 
   return (
     <nav className="sticky top-0 z-50 bg-slate-50 px-6 py-4 flex items-center justify-between ">
-      {/* // left section logo  */}
+      {/* left section logo */}
       <div className="flex flex-col leading-tight">
         <span className="text-lg md:text-2xl font-bold text-[#a91f64]">
-          Rupsha Shop
+          Sopifest Store
         </span>
         <span className="text-sm text-gray-500 tracking-widest self-baseline">
-          Furniture Store
+          Multi-Category Store
         </span>
       </div>
-      {/* center section  */}
+      {/* center section */}
       <ul className="hidden md:flex gap-8 text-gray-700 font-medium">
         <li>
           <Link href="/home" className="hover:text-[#a01f64] transition-colors">
@@ -50,7 +50,7 @@ export const Navbar = () => {
             href="/"
             className="hover:text-[#a01f64] cursor-pointer transition-colors"
           >
-            New Arrial
+            New Arrivals
           </Link>
         </li>
         <li>
@@ -71,23 +71,23 @@ export const Navbar = () => {
         </li>
       </ul>
 
-      {/* right section icon  */}
+      {/* right section icon */}
       <div className="flex items-center gap-6 text-gray-700 text-xl">
         <div className="flex gap-6">
           <FaTruck className="hover:text-[#a01f64] transition-colors" />
           <Link href="/wishlist" className="relative">
             <FaHeart className="hover:text-[#a01f64] transition-colors" />
             {watchlistItemCount > 0 && (
-              <span className="absolute -top-4 -right-3 text-sm text-white bg-[#a01f64] rounded-full px-1.5 p-0.4">
+              <span className="absolute -top-4 -right-3 text-sm text-white bg-[#a01f64] rounded-full px-1.5 py-0.5">
                 {watchlistItemCount}
               </span>
             )}
           </Link>
 
-          <Link className="relavite" href="/cart">
+          <Link className="relative" href="/cart">
             <FaShoppingCart className="hover:text-[#a01f64] transition-colors" />
             {cartItemCount > 0 && (
-              <span className="absolute top-4 right-3 text-sm text-white bg-[#a01f64] rounded-full px-1.5 p-0.4 max-[768px]:right-15 ">
+              <span className="absolute -top-4 -right-3 text-sm text-white bg-[#a01f64] rounded-full px-1.5 py-0.5 max-[768px]:right-1.5 ">
                 {cartItemCount}
               </span>
             )}
@@ -104,7 +104,7 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* mobile menu  */}
+      {/* mobile menu */}
       {isMenuOpen ? (
         <ul className="absolute top-full left-0 w-full bg-white flex flex-col items-center gap-4 py-4 text-gray-700 font-medium md:hidden shadow-md">
           <li>
@@ -119,14 +119,12 @@ export const Navbar = () => {
             Top Sellers
           </li>
           <li>
-            <Link className="hover:text-[#a91f63]" onClick={toggle} href="/">
+            <Link className="hover:text-[#a91f63]" onClick={toggle} href="/products">
               Products
             </Link>
           </li>
         </ul>
-      ) : (
-        ""
-      )}
+      ) : null}
     </nav>
   );
 };

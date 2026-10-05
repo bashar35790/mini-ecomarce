@@ -1,14 +1,23 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import ProductCard from "@/components/ProductCard";
 import data from "@/public/data/data.json";
+import { Product } from "@/types/product";
+
+interface FiltersState {
+  category: string[];
+  priceRange: string[];
+  availability: string[];
+  material: string[];
+  roomType: string[];
+  style: string[];
+}
 
 const Products = () => {
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [sortOrder, setSortOrder] = useState("default");
+  const [sortOrder, setSortOrder] = useState<string>("default");
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<FiltersState>({
     category: [],
     priceRange: [],
     availability: [],
@@ -17,7 +26,7 @@ const Products = () => {
     style: [],
   });
 
-  const handleFilterChange = (type, value) => {
+  const handleFilterChange = (type: keyof FiltersState, value: string) => {
     setFilters((prev) => ({
       ...prev,
       [type]: prev[type].includes(value)
@@ -26,14 +35,15 @@ const Products = () => {
     }));
   };
 
-  const priceRangeMap = {
+  const priceRangeMap: Record<string, (price: number) => boolean> = {
     "$0 - $100": (price) => price <= 100,
     "$100 - $300": (price) => price > 100 && price <= 300,
     "$300+": (price) => price > 300,
   };
 
   const filteredProducts = useMemo(() => {
-    return data.products.filter((product) => {
+    const productsList = data.products as unknown as Product[];
+    return productsList.filter((product) => {
       return (
         (!filters.category.length ||
           filters.category.includes(product.category)) &&
@@ -44,10 +54,11 @@ const Products = () => {
             product.inStock ? "In Stock" : "Out of Stock",
           )) &&
         (!filters.material.length ||
-          filters.material.includes(product.material)) &&
+          (product.material && filters.material.includes(product.material))) &&
         (!filters.roomType.length ||
-          filters.roomType.includes(product.roomType)) &&
-        (!filters.style.length || filters.style.includes(product.style))
+          (product.roomType && filters.roomType.includes(product.roomType))) &&
+        (!filters.style.length ||
+          (product.style && filters.style.includes(product.style)))
       );
     });
   }, [filters]);
@@ -61,7 +72,7 @@ const Products = () => {
       case "price-high":
         return items.sort((a, b) => b.price - a.price);
       case "name":
-        return items.sort((a, b) => a.text.localeCompare(b.text));
+        return items.sort((a, b) => (a.text || "").localeCompare(b.text || ""));
       default:
         return items;
     }
@@ -79,7 +90,7 @@ const Products = () => {
           {/* Category */}
           <FilterGroup
             title="Category"
-            options={["Furniture", "Lighting", "Decor"]}
+            options={["Clothing", "Electronics", "Toys", "Furniture"]}
             selected={filters.category}
             onChange={(v) => handleFilterChange("category", v)}
           />
@@ -134,7 +145,7 @@ const Products = () => {
                 key={product.id}
                 id={product.id}
                 image={product.image}
-                text={product.text}
+                text={product.text || product.title || ""}
                 price={product.price}
                 category={product.category}
                 inStock={product.inStock}
@@ -151,11 +162,23 @@ export default Products;
 
 /* ---------- Reusable Filter Group ---------- */
 
-const FilterGroup = ({ title, options, selected, onChange }) => (
+interface FilterGroupProps {
+  title: string;
+  options: string[];
+  selected: string[];
+  onChange: (opt: string) => void;
+}
+
+const FilterGroup: React.FC<FilterGroupProps> = ({
+  title,
+  options,
+  selected,
+  onChange,
+}) => (
   <div className="mb-6">
     <h4 className="font-medium mb-2">{title}</h4>
     {options.map((opt) => (
-      <label key={opt} className="flex items-center gap-2 mb-1">
+      <label key={opt} className="flex items-center gap-2 mb-1 cursor-pointer">
         <input
           type="checkbox"
           checked={selected.includes(opt)}

@@ -4,15 +4,15 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateQuantity } from "@/lib/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state) => state.cart.items);
 
   // Update quantity (minimum 1)
-  const handleUpdateQuantity = (id, delta) => {
+  const handleUpdateQuantity = (id: string | number, delta: number) => {
     const item = cartItems.find((item) => item.id === id);
     if (!item) return;
 
@@ -21,7 +21,7 @@ const CartPage = () => {
   };
 
   // Remove item from cart
-  const handleRemoveItem = (id) => {
+  const handleRemoveItem = (id: string | number) => {
     dispatch(removeFromCart(id));
   };
 
@@ -85,13 +85,15 @@ const CartPage = () => {
                       <div className="relative w-14 h-14 flex-shrink-0">
                         <Image
                           src={item.image}
-                          alt={item.text}
+                          alt={item.text || item.title || "Product image"}
                           fill
                           className="rounded object-cover"
                         />
                       </div>
                       <div>
-                        <p className="font-medium text-gray-800">{item.text}</p>
+                        <p className="font-medium text-gray-800">
+                          {item.text || item.title}
+                        </p>
                         <p className="text-sm text-gray-500">{item.category}</p>
                       </div>
                     </div>

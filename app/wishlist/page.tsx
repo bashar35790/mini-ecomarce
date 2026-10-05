@@ -1,21 +1,22 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/lib/cartSlice";
-import { removeFromWatchlist } from "@/lib/wishlistSlice";
+import { removeFromWatchlist, WishlistItem } from "@/lib/wishlistSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const Wishlist = () => {
-  const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.watchlist.items);
+  const dispatch = useAppDispatch();
+  const wishlist = useAppSelector((state) => state.watchlist.items);
 
-  const handleRemove = (id) => {
+  const handleRemove = (id: string | number) => {
     dispatch(removeFromWatchlist(id));
   };
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = (item: WishlistItem) => {
     dispatch(addToCart({ ...item, quantity: 1 }));
   };
 
@@ -63,7 +64,7 @@ const Wishlist = () => {
                   <div className="relative w-14 h-14 flex-shrink-0">
                     <Image
                       src={item.image}
-                      alt={item.text}
+                      alt={item.text || item.title || "Product image"}
                       fill
                       className="rounded object-cover"
                     />
@@ -71,7 +72,9 @@ const Wishlist = () => {
 
                   <div className="flex-1">
                     <div className="flex justify-between items-center">
-                      <p className="font-medium text-gray-800">{item.text}</p>
+                      <p className="font-medium text-gray-800">
+                        {item.text || item.title}
+                      </p>
 
                       {/* Mobile delete */}
                       <FaTrash

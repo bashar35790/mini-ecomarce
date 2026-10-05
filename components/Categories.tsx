@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Category } from "../types/category";
 
 export const Categories = () => {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     fetch("/data/data.json")
@@ -17,14 +18,14 @@ export const Categories = () => {
     <div className="mx-auto my-8 grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-3">
       {categories.map((category, index) => (
         <div
-          key={index}
+          key={category.id || index}
           className="group relative flex h-80 w-full flex-col justify-end overflow-hidden rounded-2xl"
         >
           <Image
             src={category.image}
             sizes="100"
             fill
-            alt="diee"
+            alt={category.name || "Category"}
             style={{ objectFit: "cover" }}
             className="z-0 transition transform duration-300 hover:scale-110"
           />
@@ -32,7 +33,7 @@ export const Categories = () => {
           <div className="relative z-10 pb-6 text-center">
             <Link href="/products">
               <button className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-black shadow-md cursor-pointer hover:bg-[#a91f64] hover:text-white transition-colors">
-                {category.buttonText}
+                {category.buttonText || category.name || "Explore"}
               </button>
             </Link>
           </div>

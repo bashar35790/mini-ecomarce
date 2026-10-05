@@ -1,16 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CardCarousel from "./CardCarousel";
+import { Product } from "../types/product";
 
-const TopSellers = () => {
-  const [cards, setCards] = useState([]);
+const TopSellers: React.FC = () => {
+  const [cards, setCards] = useState<Product[]>([]);
 
   useEffect(() => {
     fetch("/data/data.json")
       .then((res) => res.json())
       .then((data) => {
-        const topCards = data.products.slice(0, 8).map((item) => ({
+        const topCards: Product[] = data.products.slice(0, 8).map((item: Product) => ({
           id: item.id,
           image: item.image,
           text: item.text,

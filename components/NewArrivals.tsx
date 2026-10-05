@@ -2,15 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import CardCarousel from "./CardCarousel";
+import { Product } from "../types/product";
 
-const NewArrivals = () => {
-  const [cards, setCards] = useState([]);
+const NewArrivals: React.FC = () => {
+  const [cards, setCards] = useState<Product[]>([]);
 
   useEffect(() => {
     fetch("/data/data.json")
       .then((res) => res.json())
       .then((data) => {
-        const sliced = data.products.slice(0, 8).map((item) => ({
+        const sliced: Product[] = data.products.slice(0, 8).map((item: Product) => ({
           id: item.id,
           image: item.image,
           text: item.text,

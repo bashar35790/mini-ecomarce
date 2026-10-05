@@ -67,10 +67,12 @@ const CardCarousel = ({ title, cards = [] }) => {
             {cards.map((card, index) => (
               <div key={index} className="px-2">
                 <ProductCard
-                  id={card.id} // You MUST pass the id!
+                  id={card.id}
                   image={card.image}
                   text={card.text}
                   price={card.price}
+                  category={card.category}
+                  inStock={card.inStock}
                 />
               </div>
             ))}

@@ -10,11 +10,13 @@ const TopSellers = () => {
     fetch("/data/data.json")
       .then((res) => res.json())
       .then((data) => {
-        const topCards = data.products.slice(0, 8).map((item, index) => ({
-          id: `topseller-${item.id}-${index}`,
+        const topCards = data.products.slice(0, 8).map((item) => ({
+          id: item.id,
           image: item.image,
           text: item.text,
-          price: `${item.price}`,
+          price: item.price,
+          category: item.category,
+          inStock: item.inStock,
         }));
         setCards(topCards);
       });

@@ -1,15 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 import { removeFromCart, updateQuantity } from "@/lib/cartSlice";
+import { refreshCartPrices } from "@/lib/accountSync";
+import { store } from "@/lib/store";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
+
+  // Task 32: refresh cart against backend prices/stock on mount (logged in).
+  useEffect(() => {
+    refreshCartPrices(dispatch, store.getState);
+  }, [dispatch]);
 
   // Update quantity (minimum 1)
   const handleUpdateQuantity = (id: string | number, delta: number) => {

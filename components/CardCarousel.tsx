@@ -36,12 +36,14 @@ function SamplePrevArrow(props: CustomArrowProps) {
 
 export interface CarouselCard {
   id: string | number;
+  productId?: string;
   image: string;
   text?: string;
   title?: string;
   price: number | string;
   category?: string;
   inStock?: boolean;
+  slug?: string;
 }
 
 export interface CardCarouselProps {
@@ -84,13 +86,15 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ title, cards = [] }) => {
             {cards.map((card, index) => (
               <div key={`${card.id}-${index}`} className="px-2">
                 <ProductCard
-                  id={card.id}
+                  id={card.productId ?? card.id}
+                  productId={card.productId}
                   image={card.image}
                   text={card.text}
                   title={card.title}
                   price={card.price}
                   category={card.category}
                   inStock={card.inStock}
+                  slug={card.slug}
                 />
               </div>
             ))}

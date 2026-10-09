@@ -5,15 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 import { addToCart } from "@/lib/cartSlice";
-import { removeFromWatchlist, WishlistItem } from "@/lib/wishlistSlice";
+import type { WishlistItem } from "@/lib/wishlistSlice";
+import { toggleWishlistItem } from "@/lib/accountSync";
+import { store } from "@/lib/store";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const Wishlist = () => {
   const dispatch = useAppDispatch();
   const wishlist = useAppSelector((state) => state.watchlist.items);
 
-  const handleRemove = (id: string | number) => {
-    dispatch(removeFromWatchlist(id));
+  const handleRemove = (item: WishlistItem) => {
+    // Task 32: remove locally + mirror to backend when logged in.
+    toggleWishlistItem(dispatch, store.getState, item);
   };
 
   const handleAddToCart = (item: WishlistItem) => {
@@ -79,7 +82,7 @@ const Wishlist = () => {
                       {/* Mobile delete */}
                       <FaTrash
                         className="sm:hidden text-gray-400 hover:text-red-500 cursor-pointer"
-                        onClick={() => handleRemove(item.id)}
+                        onClick={() => handleRemove(item)}
                       />
                     </div>
 
@@ -114,7 +117,7 @@ const Wishlist = () => {
                   {/* Desktop delete */}
                   <FaTrash
                     className="hidden sm:block text-gray-400 hover:text-red-500 cursor-pointer"
-                    onClick={() => handleRemove(item.id)}
+                    onClick={() => handleRemove(item)}
                   />
                 </div>
               </div>

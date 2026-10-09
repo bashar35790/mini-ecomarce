@@ -7,10 +7,13 @@ import toast from "react-hot-toast";
 import { FaCheck, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { addToCart, removeFromCart } from "@/lib/cartSlice";
-import { addToWatchlist, removeFromWatchlist } from "@/lib/wishlistSlice";
+import { toggleWishlistItem } from "@/lib/accountSync";
+import { store } from "@/lib/store";
+import type { WishlistItem } from "@/lib/wishlistSlice";
 
 export interface ProductCardProps {
   id: string | number;
+  productId?: string;
   image: string;
   text?: string;
   title?: string;
@@ -22,6 +25,7 @@ export interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({
   id,
+  productId,
   image,
   text,
   title,
@@ -32,6 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const displayName = title || text || "Product";
+  // Task 32: keep the real Mongo ObjectId so cart/wishlist sync can talk
+  // to the backend; fall back to the display id for legacy static cards.
+  const backendId = productId ?? (typeof id === "string" ? id : undefined);
 
   const cartItems = useAppSelector((state) => state.cart.items);
   const isInCart = cartItems.some((item) => String(item.id) === String(id));
@@ -45,14 +52,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
       : Number(price) || 0;
 
   const handleToggleHeart = () => {
-    if (isInWatchlist) {
-      dispatch(removeFromWatchlist(id));
-      toast.success("Removed from wishlist", {
+    const item: WishlistItem = {
+      id: backendId ?? id,
+      productId: backendId,
+      image,
+      text: displayName,
+      title: displayName,
+      price: numericPrice,
+      quantity: 1,
+      category,
+      inStock,
+    };
+    // Task 32: optimistic local toggle, mirrored to /wishlist when logged in.
+    toggleWishlistItem(dispatch, store.getState, item).then((inWishlist) => {
+      toast.success(inWishlist ? "Added to wishlist" : "Removed from wishlist", {
         duration: 1000,
         position: "bottom-center",
         icon: <FaCheck className="text-white" />,
         style: {
-          background: "#ef4444",
+          background: inWishlist ? "#22c55e" : "#ef4444",
           color: "#fff",
           fontSize: "14px",
           fontWeight: 600,
@@ -60,38 +78,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           borderRadius: "6px",
         },
       });
-    } else {
-      dispatch(
-        addToWatchlist({
-          id,
-          image,
-          text: displayName,
-          title: displayName,
-          price: numericPrice,
-          quantity: 1,
-          category,
-          inStock,
-        })
-      );
-      toast.success("Added to wishlist", {
-        duration: 1000,
-        position: "bottom-center",
-        icon: <FaCheck className="text-white" />,
-        style: {
-          background: "#22c55e",
-          color: "#fff",
-          fontSize: "14px",
-          fontWeight: 600,
-          padding: "10px 18px",
-          borderRadius: "6px",
-        },
-      });
-    }
+    });
   };
 
   const handleToggleCart = () => {
     if (isInCart) {
-      dispatch(removeFromCart(id));
+      dispatch(removeFromCart(backendId ?? id));
       toast.success("Removed from cart", {
         duration: 1000,
         position: "bottom-center",
@@ -108,7 +100,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
     } else {
       dispatch(
         addToCart({
-          id,
+          id: backendId ?? id,
+          productId: backendId,
           image,
           text: displayName,
           title: displayName,

@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaArrowRight } from "react-icons/fa";
 import { useAppDispatch } from "@/lib/hooks";
 import { setCredentials } from "@/lib/authSlice";
+import { store } from "@/lib/store";
+import { syncOnLogin } from "@/lib/accountSync";
 import { apiClient } from "@/lib/api/client";
 import toast from "react-hot-toast";
 
@@ -53,6 +55,10 @@ function LoginForm() {
 
       const { user, accessToken } = response.data.data;
       dispatch(setCredentials({ user, accessToken }));
+
+      // Task 32: pull cloud wishlist + reconcile guest cart with live
+      // prices/stock right after login (never blocks redirect).
+      syncOnLogin(dispatch, store.getState).catch(() => {});
 
       toast.success(`Welcome back, ${user.name}!`);
       router.push(redirectUrl);

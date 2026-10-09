@@ -90,6 +90,10 @@ export default function OrderConfirmationPage() {
     );
   }
 
+  const stepIndex = TRACKING_STEPS.indexOf(order.orderStatus);
+  const isTerminal =
+    order.orderStatus === "CANCELLED" || order.orderStatus === "REFUNDED";
+
   return (
     <div className="max-w-4xl mx-auto my-12 px-4">
       <div className="bg-green-50 border border-green-200 rounded-lg p-5 mb-6 text-center">

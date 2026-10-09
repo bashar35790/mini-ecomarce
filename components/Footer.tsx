@@ -1,85 +1,218 @@
 import React from "react";
-import { MdArrowForwardIos } from "react-icons/md";
 import Link from "next/link";
+import { FaFacebookF, FaInstagram, FaYoutube, FaTiktok } from "react-icons/fa";
+import {
+  MdCheckCircle,
+  MdLocalShipping,
+  MdShield,
+  MdHeadsetMic,
+  MdSend,
+} from "react-icons/md";
 
 export const Footer = () => {
   return (
-    <footer className="py-10 w-full">
-      <div className="container flex flex-col mx-auto gap-24 px-6 md:px-0">
-        <div className="first flex flex-col md:flex-row mx-auto w-full justify-between gap-8 md:gap-0">
-          <div className="flex flex-col leading-tight">
-            <span className="text-lg md:text-2xl font-bold text-[#a91f64]">
-              Sopifest Store
-            </span>
-            <span className="text-sm text-gray-500 tracking-widest self-baseline">
-              Multi-Category Store
-            </span>
+    <footer className="w-full bg-[#fcf8f9] text-gray-800 pt-8 overflow-hidden font-sans">
+      <div className="container mx-auto">
+        {/* TOP FEATURES / SERVICE HIGHLIGHTS BAR */}
+        <div className="bg-white rounded-2xl shadow-sm border border-pink-100 p-6 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-xl bg-[#a91f64]/10 text-[#a91f64] text-2xl">
+              <MdCheckCircle />
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm text-gray-900">
+                Authentic Products
+              </h4>
+              <p className="text-xs text-gray-500">Manufacturer warranty</p>
+            </div>
           </div>
-          <div className="flex gap-4 items-center">
-            <p className="text-gray-700">Ready to start shopping?</p>
-            <Link href="/products">
-              <button className="text-lg font-bold text-white px-6 py-3 rounded-lg cursor-pointer bg-[#a91f64] hover:bg-[#8f1954] transition-colors">
-                Explore Now
-              </button>
-            </Link>
+
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-xl bg-[#a91f64]/10 text-[#a91f64] text-2xl">
+              <MdLocalShipping />
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm text-gray-900">
+                Fast Delivery
+              </h4>
+              <p className="text-xs text-gray-500">Nationwide shipping</p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-xl bg-[#a91f64]/10 text-[#a91f64] text-2xl">
+              <MdShield />
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm text-gray-900">
+                Secure Payment
+              </h4>
+              <p className="text-xs text-gray-500">100% safe & trusted</p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-xl bg-[#a91f64]/10 text-[#a91f64] text-2xl">
+              <MdHeadsetMic />
+            </div>
+            <div>
+              <h4 className="font-semibold text-sm text-gray-900">
+                Customer Support
+              </h4>
+              <p className="text-xs text-gray-500">Always here to help</p>
+            </div>
           </div>
         </div>
-        <div className="middle grid grid-cols-1 md:grid-cols-4 gap-12 justify-between">
-          <div className="one space-y-5">
-            <h3 className="text-[#1C1C1C] font-semibold">Quick Links</h3>
-            <div className="space-y-2.5">
-              <Link href="/home" className="block text-[#494949] font-normal hover:text-[#a91f64]">Home</Link>
-              <Link href="/about" className="block text-[#494949] font-normal hover:text-[#a91f64]">About Us</Link>
-              <Link href="/products" className="block text-[#494949] font-normal hover:text-[#a91f64]">Shop</Link>
-              <Link href="/privacy" className="block text-[#494949] font-normal hover:text-[#a91f64]">Privacy Policy</Link>
-            </div>
-          </div>
+      </div>
 
-          <div className="two space-y-5">
-            <h3 className="text-[#1C1C1C] font-semibold">Our Categories</h3>
-            <div className="space-y-2.5">
-              <Link href="/category/clothing" className="block text-[#494949] font-normal hover:text-[#a91f64]">Clothing</Link>
-              <Link href="/category/electronics" className="block text-[#494949] font-normal hover:text-[#a91f64]">Electronics</Link>
-              <Link href="/category/toys" className="block text-[#494949] font-normal hover:text-[#a91f64]">Toys</Link>
-              <Link href="/category/furniture" className="block text-[#494949] font-normal hover:text-[#a91f64]">Furniture</Link>
-            </div>
-          </div>
+      {/* DARK MAIN FOOTER CONTENT WITH WAVE EFFECT */}
+      <div className="bg-[#4d092b] text-white pt-12 pb-6 relative rounded-t-[35px] md:rounded-t-[50px]">
+        {/* Subtle decorative background glow */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#a91f64] opacity-20 blur-3xl pointer-events-none -z-0" />
 
-          <div className="three space-y-5">
-            <h3 className="text-[#1C1C1C] font-semibold">Help</h3>
-            <div className="space-y-2.5">
-              <Link href="/faq" className="block text-[#494949] font-normal hover:text-[#a91f64]">FAQs</Link>
-              <Link href="/contact" className="block text-[#494949] font-normal hover:text-[#a91f64]">Contact Us</Link>
-              <Link href="/shipping" className="block text-[#494949] font-normal hover:text-[#a91f64]">Shipping & Returns</Link>
+        <div className="container mx-auto px-6 md:px-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12">
+            {/* BRAND / LOGO SECTION */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl md:text-3xl font-extrabold text-white">
+                  Sopifest <span className="text-[#f472b6]">Store</span>
+                </span>
+              </div>
+              <p className="text-xs text-pink-200 tracking-wider font-light">
+                Multi-Category Store
+              </p>
+              <p className="text-sm text-pink-100/80 pt-2 leading-relaxed">
+                Your one-stop destination for quality clothing, electronics,
+                toys, and furniture.
+              </p>
             </div>
-          </div>
 
-          <div className="four space-y-5">
-            <h3 className="text-[#1C1C1C] text-2xl font-semibold">
-              Subscribe to our <br />
-              newsletter
-            </h3>
-            <div className="flex items-center">
-              <form className="border-b border-[#494949] flex w-full">
+            {/* QUICK LINKS */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white tracking-wide">
+                Quick Links
+              </h3>
+              <ul className="space-y-2.5 text-sm text-pink-100/80">
+                <li>
+                  <Link
+                    href="/home"
+                    className="hover:text-white transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/products"
+                    className="hover:text-white transition-colors"
+                  >
+                    Shop Products
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="hover:text-white transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* SOCIAL MEDIA / FOLLOW US */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white tracking-wide">
+                Follow Us
+              </h3>
+              <div className="flex gap-3">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#a91f64] transition-all hover:scale-105 text-white"
+                >
+                  <FaFacebookF size={18} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#a91f64] transition-all hover:scale-105 text-white"
+                >
+                  <FaInstagram size={18} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="YouTube"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#a91f64] transition-all hover:scale-105 text-white"
+                >
+                  <FaYoutube size={18} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="TikTok"
+                  className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#a91f64] transition-all hover:scale-105 text-white"
+                >
+                  <FaTiktok size={18} />
+                </a>
+              </div>
+            </div>
+
+            {/* NEWSLETTER */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold text-white tracking-wide">
+                Newsletter
+              </h3>
+              <p className="text-sm text-pink-100/80">
+                Get the latest news and special offers delivered to your inbox.
+              </p>
+              <form className="relative flex items-center mt-2">
                 <input
                   type="email"
                   name="email"
-                  id="email"
-                  placeholder="Email address"
+                  placeholder="Enter your email address"
                   required
-                  className="py-2 pr-2 bg-transparent outline-none w-full"
+                  className="w-full py-3 pl-4 pr-12 rounded-full bg-white text-gray-800 placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#a91f64] text-sm"
                 />
-                <button type="submit" className="cursor-pointer ml-2">
-                  <MdArrowForwardIos className="text-2xl text-[#a91f64]" />
+                <button
+                  type="submit"
+                  aria-label="Subscribe"
+                  className="absolute right-1.5 p-2.5 rounded-full bg-[#a91f64] hover:bg-[#8f1954] text-white transition-all cursor-pointer"
+                >
+                  <MdSend className="text-lg" />
                 </button>
               </form>
             </div>
           </div>
-        </div>
-        <div className="bottom text-center">
-          <p className="text-[#494949] font-medium">
-            © {new Date().getFullYear()} Sopifest Store. - All rights reserved.
-          </p>
+
+          {/* BOTTOM BAR / COPYRIGHT & LEGAL */}
+          <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-pink-200/70 gap-4">
+            <p>
+              © {new Date().getFullYear()} Sopifest Store. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <Link
+                href="/terms"
+                className="hover:text-white transition-colors"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                href="/privacy"
+                className="hover:text-white transition-colors"
+              >
+                Privacy Policy
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

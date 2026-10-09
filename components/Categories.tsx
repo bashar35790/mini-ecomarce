@@ -15,7 +15,7 @@ export const Categories = () => {
   }, []);
 
   return (
-    <div className="mx-auto my-8 grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-3">
+    <div className="mx-auto my-8 grid grid-cols-1 gap-6 md:grid-cols-3">
       {categories.map((category, index) => (
         <div
           key={category.id || index}

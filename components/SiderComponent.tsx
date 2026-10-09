@@ -3,7 +3,7 @@
 import React from "react";
 import Slider, { Settings } from "react-slick";
 import Image, { StaticImageData } from "next/image";
-import slider1 from "../public/images/slider1.jpg";
+import slider1 from "../public/images/banner.png";
 import slider2 from "../public/images/slider2.jpg";
 import slider3 from "../public/images/slider3.jpg";
 
@@ -25,7 +25,7 @@ export const SiderComponent: React.FC = () => {
       <Slider {...settings}>
         {sliders.map((slide, index) => (
           <div key={index} className="relative outline-none">
-            <div className="w-full relative h-[360px] sm:h-[440px] md:h-[500px]">
+            <div className="w-full relative h-90 sm:h-110 md:h-125">
               <Image
                 src={slide}
                 alt={`Promo banner ${index + 1}`}
@@ -45,7 +45,8 @@ export const SiderComponent: React.FC = () => {
                       50% OFF
                     </span>
                     <p className="text-gray-100 text-sm sm:text-base">
-                      Explore top-trending fashion, tech gadgets, handcrafted toys & home essentials.
+                      Explore top-trending fashion, tech gadgets, handcrafted
+                      toys & home essentials.
                     </p>
                   </div>
                 </div>
@@ -61,7 +62,8 @@ export const SiderComponent: React.FC = () => {
                       Collections
                     </h2>
                     <p className="text-gray-200 text-sm sm:text-lg max-w-md mx-auto">
-                      Discover our multi-category arrivals curated for quality and durability.
+                      Discover our multi-category arrivals curated for quality
+                      and durability.
                     </p>
                   </div>
                 </div>

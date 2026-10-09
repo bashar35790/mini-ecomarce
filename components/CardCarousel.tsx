@@ -61,14 +61,23 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ title, cards = [] }) => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3, infinite: cards.length > 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2, infinite: cards.length > 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1, infinite: cards.length > 1 } },
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 3, infinite: cards.length > 3 },
+      },
+      {
+        breakpoint: 768,
+        settings: { slidesToShow: 2, infinite: cards.length > 2 },
+      },
+      {
+        breakpoint: 640,
+        settings: { slidesToShow: 1, infinite: cards.length > 1 },
+      },
     ],
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto my-12 px-4">
+    <div className="w-full mx-auto my-12 px-4">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl sm:text-3xl md:text-4xl font-bold text-gray-800">
           {title}
@@ -100,7 +109,9 @@ const CardCarousel: React.FC<CardCarouselProps> = ({ title, cards = [] }) => {
             ))}
           </Slider>
         ) : (
-          <p className="text-gray-500 py-6 text-center">No products available</p>
+          <p className="text-gray-500 py-6 text-center">
+            No products available
+          </p>
         )}
       </div>
     </div>

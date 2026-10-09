@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 import { removeFromCart, updateQuantity } from "@/lib/cartSlice";
 import { refreshCartPrices } from "@/lib/accountSync";
@@ -11,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 const CartPage = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const cartItems = useAppSelector((state) => state.cart.items);
 
   // Task 32: refresh cart against backend prices/stock on mount (logged in).
@@ -179,7 +181,8 @@ const CartPage = () => {
 
               <button
                 disabled={!cartItems.length}
-                className="w-full bg-[#a91f64] text-white py-2 rounded-md hover:bg-[#8a1b54] disabled:bg-gray-300 disabled:cursor-not-allowed"
+                onClick={() => router.push("/checkout")}
+                className="w-full bg-[#a91f64] text-white py-2 rounded-md hover:bg-[#8a1b54] disabled:bg-gray-300 disabled:cursor-not-allowed cursor-pointer"
               >
                 Proceed to Checkout
               </button>

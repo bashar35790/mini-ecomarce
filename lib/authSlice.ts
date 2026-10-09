@@ -7,6 +7,7 @@ export interface User {
   role: "USER" | "ADMIN" | "STAFF";
   isActive?: boolean;
   avatar?: string | null;
+  phone?: string | null;
 }
 
 export interface AuthState {

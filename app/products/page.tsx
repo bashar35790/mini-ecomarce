@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import {
   fetchProducts,
@@ -28,7 +29,11 @@ const getCardImage = (product: BackendProduct): string => {
 const getEffectivePrice = (product: BackendProduct): number =>
   product.discountPrice ?? product.basePrice;
 
-const Products = () => {
+const ProductsCatalog = ({
+  initialCategory,
+}: {
+  initialCategory?: string;
+}) => {
   const [products, setProducts] = useState<BackendProduct[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [total, setTotal] = useState(0);
@@ -54,12 +59,21 @@ const Products = () => {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  // Load categories once (drives the category filter for all verticals)
+  // Load categories once (drives the category filter for all verticals).
+  // Honors ?category=<slug> deep links (e.g. from the details page).
   useEffect(() => {
     let cancelled = false;
     fetchCategories()
       .then((cats) => {
-        if (!cancelled) setCategories(cats);
+        if (cancelled) return;
+        setCategories(cats);
+        if (
+          initialCategory &&
+          initialCategory !== "all" &&
+          cats.some((c) => c.slug === initialCategory)
+        ) {
+          setCategory(initialCategory);
+        }
       })
       .catch(() => {
         if (!cancelled) setCategories([]);
@@ -67,7 +81,7 @@ const Products = () => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialCategory]);
 
   const loadProducts = useCallback(async () => {
     setLoading(true);
@@ -305,6 +319,7 @@ const Products = () => {
                     price={getEffectivePrice(product)}
                     category={product.category?.name ?? "General"}
                     inStock={product.stockCount > 0}
+                    slug={product.slug}
                   />
                 ))}
               </div>
@@ -337,6 +352,20 @@ const Products = () => {
       </div>
     </div>
   );
+};
+
+const Products = () => {
+  return (
+    <Suspense>
+      <ProductsWithParams />
+    </Suspense>
+  );
+};
+
+const ProductsWithParams = () => {
+  const searchParams = useSearchParams();
+  const initialCategory = searchParams.get("category") ?? undefined;
+  return <ProductsCatalog initialCategory={initialCategory} />;
 };
 
 export default Products;

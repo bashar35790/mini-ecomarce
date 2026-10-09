@@ -15,6 +15,22 @@ export interface BackendProductCategory {
   slug: string;
 }
 
+export interface BackendProductVariant {
+  id: string;
+  sku: string;
+  title: string;
+  attributes: Record<string, string>;
+  price: number;
+  discountPrice?: number | null;
+  stockCount: number;
+  image?: string | null;
+}
+
+export interface BackendProductSpecification {
+  key: string;
+  value: string;
+}
+
 export interface BackendProduct {
   id: string;
   title: string;
@@ -28,6 +44,10 @@ export interface BackendProduct {
   basePrice: number;
   discountPrice?: number | null;
   images: BackendProductImage[];
+  hasVariants?: boolean;
+  variants?: BackendProductVariant[];
+  specifications?: BackendProductSpecification[];
+  weightKg?: number | null;
   stockCount: number;
   lowStockThreshold: number;
   rating: number;

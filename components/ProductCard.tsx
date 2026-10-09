@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { FaCheck, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -16,6 +17,7 @@ export interface ProductCardProps {
   price: number | string;
   category?: string;
   inStock?: boolean;
+  slug?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -26,6 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   price,
   category = "General",
   inStock = true,
+  slug,
 }) => {
   const dispatch = useAppDispatch();
   const displayName = title || text || "Product";
@@ -134,23 +137,45 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div className="py-4">
       <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-[340px] border border-gray-100">
-        <div className="relative w-full h-48 bg-gray-50 overflow-hidden">
-          <Image
-            src={image}
-            alt={displayName}
-            fill
-            style={{ objectFit: "cover" }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="hover:scale-105 transition-transform duration-300"
-          />
-        </div>
+        {slug ? (
+          <Link
+            href={`/products/${slug}`}
+            className="relative w-full h-48 bg-gray-50 overflow-hidden block"
+          >
+            <Image
+              src={image}
+              alt={displayName}
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="hover:scale-105 transition-transform duration-300"
+            />
+          </Link>
+        ) : (
+          <div className="relative w-full h-48 bg-gray-50 overflow-hidden">
+            <Image
+              src={image}
+              alt={displayName}
+              fill
+              style={{ objectFit: "cover" }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        )}
         <div className="p-4 flex flex-col justify-between flex-1 text-left">
           <div>
             <span className="text-xs uppercase tracking-wider text-gray-400 font-semibold">
               {category}
             </span>
             <h3 className="text-base font-semibold text-gray-800 mt-1 line-clamp-1">
-              {displayName}
+              {slug ? (
+                <Link href={`/products/${slug}`} className="hover:underline">
+                  {displayName}
+                </Link>
+              ) : (
+                displayName
+              )}
             </h3>
           </div>
           <div className="flex items-center justify-between pt-3 border-t border-gray-100">
